@@ -21,6 +21,10 @@ export default function Home() {
 
   const addTask = async () => {
     const title = prompt("Task?");
+    if (!title || title.trim() === "") {
+      return;
+    }
+    
     await fetch("/api/graphql", {
       method: "POST",
       body: JSON.stringify({
