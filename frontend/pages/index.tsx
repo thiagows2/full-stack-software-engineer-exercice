@@ -13,7 +13,7 @@ export default function Home() {
     })
       .then((res) => res.json())
       .then((data) => setTasks(data.data.tasks));
-  });
+  }, []);
 
   const addTask = async () => {
     const title = prompt("Task?");
