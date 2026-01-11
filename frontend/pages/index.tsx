@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 
+interface Task {
+  id: string;
+  title: string;
+  completed: boolean;
+}
+
 export default function Home() {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   const fetchTasks = async () => {
@@ -96,13 +102,13 @@ export default function Home() {
       )}
       <button onClick={addTask}>Add</button>
 
-      {tasks?.map((t: any) => (
+      {tasks.map((task) => (
         <div
-          key={t.id}
-          onClick={() => toggleTask(t.id)}
+          key={task.id}
+          onClick={() => toggleTask(task.id)}
           style={{ cursor: "pointer" }}
         >
-          {t.title} — {t.completed ? "Done" : "Pending"}
+          {task.title} — {task.completed ? "Done" : "Pending"}
         </div>
       ))}
     </div>
