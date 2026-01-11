@@ -21,14 +21,16 @@ export default function Home() {
 
   const addTask = async () => {
     const title = prompt("Task?");
-    if (!title || title.trim() === "") {
+    const trimmedTitle = title ? title.trim() : "";
+    if (!trimmedTitle) {
       return;
     }
-    
+
     await fetch("/api/graphql", {
       method: "POST",
       body: JSON.stringify({
-        query: `mutation { createTask(title: "${title}") { id title } }`,
+        query: "mutation CreateTask($title: String!) { createTask(title: $title) { id title completed } }",
+        variables: { title: trimmedTitle },
       }),
       headers: { "Content-Type": "application/json" },
     });
@@ -39,7 +41,8 @@ export default function Home() {
     await fetch("/api/graphql", {
       method: "POST",
       body: JSON.stringify({
-        query: `mutation { toggleTask(id: "${id}") { id completed } }`,
+        query: "mutation ToggleTask($id: ID!) { toggleTask(id: $id) { id completed } }",
+        variables: { id },
       }),
       headers: { "Content-Type": "application/json" },
     });
