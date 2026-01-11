@@ -8,6 +8,13 @@ module.exports = {
       password: process.env.DB_PASSWORD || "123123",
       database: process.env.DB_NAME || "taskdb",
     },
+    pool: {
+      min: 2,
+      max: 10,
+      acquireTimeoutMillis: 30000,
+      idleTimeoutMillis: 30000,
+      reapIntervalMillis: 1000,
+    },
     migrations: {
       directory: "./migrations",
     },
