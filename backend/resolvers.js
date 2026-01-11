@@ -6,7 +6,9 @@ module.exports = {
   Query: {
     tasks: async () => {
       try {
-        const tasks = await db("tasks");
+        const tasks = await db("tasks")
+          .orderBy("completed", "asc")
+          .orderBy("created_at", "desc");
         return tasks;
       } catch (error) {
         throw new Error(`Failed to fetch tasks: ${error.message}`);
