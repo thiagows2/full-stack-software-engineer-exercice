@@ -3,16 +3,20 @@ import { useEffect, useState } from "react";
 export default function Home() {
   const [tasks, setTasks] = useState([]);
 
-  useEffect(() => {
-    fetch("/api/graphql", {
+  const fetchTasks = async () => {
+    const response = await fetch("/api/graphql", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         query: `{ tasks { id title completed } }`,
       }),
-    })
-      .then((res) => res.json())
-      .then((data) => setTasks(data.data.tasks));
+    });
+    const data = await response.json();
+    setTasks(data.data.tasks);
+  };
+
+  useEffect(() => {
+    fetchTasks();
   }, []);
 
   const addTask = async () => {
@@ -24,6 +28,7 @@ export default function Home() {
       }),
       headers: { "Content-Type": "application/json" },
     });
+    await fetchTasks();
   };
 
   const toggleTask = async (id: string) => {
@@ -34,6 +39,7 @@ export default function Home() {
       }),
       headers: { "Content-Type": "application/json" },
     });
+    await fetchTasks();
   };
 
   return (
