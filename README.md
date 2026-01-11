@@ -21,11 +21,13 @@ docker compose up
 
 3. Create the database tables
 ```bash
+> cd backend
 npm run migrate
 ```
 
 4. Seed your database with initial data
 ```bash
+> cd backend
 npm run seed
 ```
 
